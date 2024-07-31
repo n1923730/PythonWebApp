@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Datenraum-Explorer {% endblock %}</h1>
+
+
+<p>Daten übertragen:</p>
+
+<p>Zunächst wird die IP-Adresse des Daten-Anbieters benötigt. Mit deren Angabe startet der Prozess</p>
+
+<form action="/" method = "POST">
+    <p>IP Adress of Producer <input type = "text" name = "ProdIP" /></p>
+    <p><input type = "submit" value = "submit" /></p>
+</form>
+
+{% endblock %}

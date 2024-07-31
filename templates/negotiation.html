@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+<div hx-get= "http://localhost:5000/negotiations" hx-trigger="every 10s">
+
+{% block content %}
+    <h1>{% block title %} Datenraum-Explorer {% endblock %}</h1>
+
+<p> Die Vertragsverhandlungen mit dem Server unter {{content.ProducerIp}} wurden gestartet</p>
+
+<p>Zunächst wird der Angebots-Katalog des Providers angefragt.</p>
+<button hx-get="/negotiations/fetchCatalog" hx-trigger="click" hx-swap="outerHTML">
+    Katalog anfragen
+</button>
+
+
+<p></p>
+<p>Dann geht es in die Vertragsverhandlungen. Der Daten-Anbieter hat in seinem Angebotskatalog einen zum Datensatz gehörigen Vertrag veröffentlicht. Diesen muss der 
+    Consumer unverändert zurück senden, als Zeichen seiner Akzptanz der Bedingungen. </p>
+
+
+<button hx-get="/negotiations/negotiateContract" hx-trigger="click" hx-swap="outerHTML">
+    Vertragsverhandlungen starten
+</button>
+
+
+<p></p>
+<p>Diese Verhandlungen verlaufen asynchron, der aktuelle Stand kann mit der eben erhaltenen Contract-Agreement-Id abgefragt werden. 
+    Sobald beide Parteien zu einem Ergebnis gekommen sind, (Status = "confirmed" oder "declined") kann die eigentliche Datentransaktion starten. </p>
+<button hx-get="/negotiations/checkContractStatus" hx-trigger="click" hx-swap="outerHTML">
+    Status der Vertragsverhandlungen abfragen
+</button>
+
+
+<p></p>
+<p>Nach den erfolgreichen Vertragsverhandlungen können wir nun die Datenübertragung starten. Sie wird in diesem Beispiel als Consumer-Pull konfiguriert und durchgeführt.
+    Dabei übertragen wir die eben erhaltene Contract-Agreement-Id, um dem Provider zu zeigen, dass es bereits eine Übereinkunft gibt.
+</p>
+<button hx-get="/negotiations/requestTheData" hx-trigger="click" hx-swap="outerHTML">
+    Datenübertragung starten
+</button>
+
+
+<p></p>
+<p> Auch hier besteht wieder die Möglichkeit, den Status der Übertragung zu überprüfen:
+</p>
+<button hx-get="/negotiations/checkTransferStatus" hx-trigger="click" hx-swap="outerHTML">
+    Status prüfen
+</button>
+
+
+<p></p>
+<p> Die API zum Datenaustausch ist geschützt vor unauthorisierten Zugriffen. Mit unserer TransferProcessId können wir ein OAuth-Token anfragen, welches uns dann den Zugang gewährt.
+</p>
+<button hx-get="/negotiations/checkTheData" hx-trigger="click" hx-swap="outerHTML">
+    Token anfragen
+</button>
+
+
+<p></p>
+<p> Jetzt werden die Daten tatsächlich abgefragt:
+</p>
+<button hx-get="/negotiations/getTheData" hx-trigger="click" hx-swap="outerHTML">
+    Daten herunterladen
+</button>
+
+{% endblock %}
+</div>
