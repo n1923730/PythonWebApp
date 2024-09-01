@@ -1,8 +1,7 @@
-from flask import render_template, Blueprint, g
+from flask import render_template, Blueprint
 from .negotiationViews import Negotiation
 import json
 import matplotlib.pyplot as plt
-import matplotlib.dates as dates
 from datetime import datetime 
 
 

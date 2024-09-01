@@ -1,8 +1,5 @@
-from flask import render_template, Blueprint, redirect, send_file, url_for
+from flask import render_template, Blueprint, redirect, send_file
 from ..controller import negotiationController
-# from time import sleep
-# from threading import Thread
-# from apscheduler.schedulers.background import BackgroundScheduler
 
 negotiations_blueprint = Blueprint("negotiations", __name__, url_prefix="/negotiations")
 ContractOfferId: str = "none"
@@ -31,7 +28,7 @@ class Negotiation:
         global ContractOfferId
         ContractOfferId= negotiationController.NegotiationController.getCataloge(ProducerIp)
         if ContractOfferId != "none":
-            return 'Das hat geklappt. Wir bekommen die ContractOfferId = ' + ContractOfferId
+            return 'Das hat geklappt. Wir bekommen die ContractOfferId = ' + str(ContractOfferId)
         return "Das hat nicht geklappt."
 
 
@@ -62,12 +59,13 @@ class Negotiation:
             global TransferProcessId
             TransferProcessId = negotiationController.NegotiationController.startTransfer(ProducerIp, ContractAgreementId)
         if TransferProcessId != "none":
-            return "Der Transfer konnte gestartet werden. Wir können ihr mit der TransferProcessId = " + TransferProcessId + " referenzieren, um seinen Status zu überprüfen."
+            return "Der Provider hat bestätigt, dass der Transfer nun gestartet werden kann. Wir können ihr mit der TransferProcessId = " + TransferProcessId + " referenzieren, um seinen Status zu überprüfen."
         return "Das hat nicht geklappt."
 
 
     @negotiations_blueprint.route('/checkTransferStatus')
     def checkTransferStatus():
+        global TransferStatus
         if TransferProcessId != "none":
             TransferStatus = negotiationController.NegotiationController.getTransferStatus(ProducerIp, TransferProcessId)
         match TransferStatus:
@@ -75,6 +73,7 @@ class Negotiation:
             case "TERMINATED": return "Der Transfer verlief erfolgreich und ist abgeschlossen."
             case "DEPROVISIONED": return "Die Berechtigung ist abgelaufen."
             case "REQUESTED": return "Der Transfer wurde angefragt"
+            
 
         print("Status = " + TransferStatus)
         return "Das hat nicht geklappt."

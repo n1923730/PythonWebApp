@@ -1,9 +1,6 @@
-from flask import render_template, Blueprint, g
+from flask import render_template, Blueprint
 from flask import request, redirect
 from .negotiationViews import Negotiation
-# from time import sleep
-# from threading import Thread
-# from apscheduler.schedulers.background import BackgroundScheduler
 
 index_blueprint = Blueprint("index", __name__)
 

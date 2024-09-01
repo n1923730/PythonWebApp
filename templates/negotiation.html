@@ -3,8 +3,8 @@
 
 {% block content %}
     <h1>{% block title %} Datenraum-Explorer {% endblock %}</h1>
-
-<p> Die Vertragsverhandlungen mit dem Server unter {{content.ProducerIp}} wurden gestartet</p>
+<br></br>
+<p> Wir können nun mit dem Connector unter {{content.ProducerIp}} interagieren. </p>
 
 <p>Zunächst wird der Angebots-Katalog des Providers angefragt.</p>
 <button hx-get="/negotiations/fetchCatalog" hx-trigger="click" hx-swap="outerHTML">
@@ -15,7 +15,6 @@
 <p></p>
 <p>Dann geht es in die Vertragsverhandlungen. Der Daten-Anbieter hat in seinem Angebotskatalog einen zum Datensatz gehörigen Vertrag veröffentlicht. Diesen muss der 
     Consumer unverändert zurück senden, als Zeichen seiner Akzptanz der Bedingungen. </p>
-
 
 <button hx-get="/negotiations/negotiateContract" hx-trigger="click" hx-swap="outerHTML">
     Vertragsverhandlungen starten
@@ -35,7 +34,7 @@
     Dabei übertragen wir die eben erhaltene Contract-Agreement-Id, um dem Provider zu zeigen, dass es bereits eine Übereinkunft gibt.
 </p>
 <button hx-get="/negotiations/requestTheData" hx-trigger="click" hx-swap="outerHTML">
-    Datenübertragung starten
+    Datenübertragungs-Prozess starten
 </button>
 
 
